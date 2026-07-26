@@ -2,24 +2,24 @@ const express = require("express");
 
 const app = express();
 
-app.get("/user",(req,res)=>{
-    res.send({firstName: "Raj",lastname:"Dwivedi"})
-})
-
-app.post("/user",(req,res)=>{
-   res.send("Data Saved succesfull");
-    
-})
-
-app.delete("/user",(req,res)=>{
-    res.send("Deleted Succesfull")
-})
-
-app.use("/test",(req,res)=>{
-    res.send("Hello From the server");
-});
-
-
+app.use(
+    "/user",
+    (req,res,next)=>{
+    console.log("Handling Route 1!!")
+    next();
+    // res.send("Resolve 1!!")
+    },
+    (req,res,next)=>{
+    console.log("Handling Route 2!!")
+    // res.send("Resolve 2!!")
+    next();
+    },
+    (req,res,next)=>{
+    console.log("Handling Route 3!!")
+    res.send("Resolve 3!!")
+    next()
+    }
+)
 
 app.listen(3000,()=>{
     console.log("Server is successfull");
